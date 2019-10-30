@@ -9,7 +9,8 @@ void setup() {
 void loop() {
 
   long state = digitalRead(sensor);
-    if(state == HIGH) {
+    if(state == HIGH)
+    {
       digitalWrite (Status, HIGH);
       Serial.println("Motion detected!");
       delay(1000);
@@ -28,10 +29,10 @@ void loop() {
 ///////////////Parameters/////////////////
 // WIFI params
 const char* ssid = "XYZ";
-const char* password = "123abcabc";
+const char* password = "123xyzabc;
 
 // CSE params
-const char* host = "192.168.43.5";
+const char* host = "192.168.43.5";//use your ip address of the host
 const int httpPort = 8080;
 
 // AE params
