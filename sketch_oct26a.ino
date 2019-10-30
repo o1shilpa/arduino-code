@@ -1,5 +1,4 @@
 /*int Status = 12;  // Digital pin D6
-
 int sensor = 13;  // Digital pin D7
 void setup() {
 
@@ -48,7 +47,7 @@ int sensorValue = 0; // variable to store the value coming from the sensor
 
 void setup() {
 
-  Serial.begin(115200);
+  Serial.begin(115200);//9600 leads to serial port not detected error
   delay(10);
 
   // Configure pin 5 for LED control
