@@ -21,24 +21,6 @@ void loop() {
 }
 */
 
-#include <ESP8266WiFi.h>
-#include "Timer.h"
-
-///////////////Parameters/////////////////
-// WIFI params
-const char* ssid = "XYZ";
-const char* password = "123abcabc";
-
-// CSE params
-const char* host = "192.168.43.5";
-const int httpPort = 8080;
-
-// AE params
-const int aePort   = 80;
-const char* origin   = "Cae_device1";
-///////////////////////////////////////////
-
-Timer t;
 
 WiFiServer server(aePort);
 int Status = 12;
@@ -140,29 +122,6 @@ String send(String url,int ty, String rep) {
     }
   }
 
-  // Read the HTTP response
-  String res="";
-  if(client.available()){
-    res = client.readStringUntil('\r');
-    Serial.print(res);
-  }
-  while(client.available()){
-    String line = client.readStringUntil('\r');
-    Serial.print(line);
-  }
   
-  Serial.println();
-  Serial.println("closing connection");
-  Serial.println();
-  return res;
-}
-
-void push(){
-  sensorValue = digitalRead(sensorPin);
-  Serial.println(sensorValue);
-  String data = String()+"{\"m2m:cin\":{\"con\":\""+sensorValue+"\"}}";
-  send("/server/mydevice1/movement",4,data);
-
-}
 
 
