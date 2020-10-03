@@ -45,63 +45,6 @@ int Status = 12;
 int sensorPin = 13; // select the input pin for PIR 
 int sensorValue = 0; // variable to store the value coming from the sensor 
 
-void setup() {
-
-  Serial.begin(115200);//9600 leads to serial port not detected error
-  delay(10);
-
-  // Configure pin 5 for LED control
-  
-  pinMode(sensorValue, INPUT);
-  pinMode(Status, OUTPUT);
-  digitalWrite(Status, 0);
-
-  Serial.println();
-  Serial.println();
-
-  // Connect to WIFI network
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
- 
-  WiFi.persistent(false);
-  
-  WiFi.begin(ssid, password);
-  
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println();
-  Serial.println("WiFi connected");  
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
-
-  // Start HTTP server
-  server.begin();
-  Serial.println("Server started");
-
-  // Create AE resource
-  String resulat = send("/server",2,"{\"m2m:ae\":{\"rn\":\"mydevice1\",\"api\":\"mydevice1.company.com\",\"rr\":\"true\",\"poa\":[\"http://"+WiFi.localIP().toString()+":"+aePort+"\"]}}");
-  
-  if(resulat=="HTTP/1.1 201 Created"){
-    // Create Container resource
-    send("/server/mydevice1",3,"{\"m2m:cnt\":{\"rn\":\"movement\"}}");
-
-    // Create ContentInstance resource
-    send("/server/mydevice1/movement",4,"{\"m2m:cin\":{\"con\":\"0\"}}");
-    
-    // Create Container resource
-    send("/server/mydevice1",3,"{\"m2m:cnt\":{\"rn\":\"speaker\"}}");
-
-    // Create ContentInstance resource
-    send("/server/mydevice1/speaker",4,"{\"m2m:cin\":{\"con\":\"OFF\"}}");
-
-    // Create Subscription resource
-    send("/server/mydevice1/speaker",23,"{\"m2m:sub\":{\"rn\":\"spk_sub\",\"nu\":[\"Cae_device1\"],\"nct\":1}}");
-  }
-
-  t.every(1000*5, push);
-}
 
 // Method in charge of receiving event from the CSE
 void loop(){
